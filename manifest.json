@@ -1,0 +1,25 @@
+{
+   "background": {
+      "scripts": ["options.js", "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "icon_dict.gif",
+      "default_popup": "options.html"
+   },
+   "content_scripts": [ {
+      "js": [ "lookup.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "description": "支持Chrome浏览器的划词翻译+有道生词本",
+   "icons": {
+      "128": "icon-128.png",
+      "64": "icon.png"
+   },
+   
+   "manifest_version": 2,
+   "name": "有道词典Chrome划词插件+有道生词本",
+   "options_page": "options.html",
+   "permissions": ["cookies", "http://*/*", "https://*/*" ],
+   "version": "1.30",
+   "web_accessible_resources": [ "ab20.png", "ydd-sprite.png" ]
+}
