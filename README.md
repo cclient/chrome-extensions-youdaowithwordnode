@@ -3,7 +3,7 @@
 原始扩展 https://chrome.google.com/webstore/detail/%E6%9C%89%E9%81%93%E8%AF%8D%E5%85%B8chrome%E5%88%92%E8%AF%8D%E6%8F%92%E4%BB%B6/eopjamdnofihpioajgfdikhhbobonhbb?hl=zh-CN
 
 
-#原生不带生词本,求之不得，便自已动手
+#原生不带生词本,只好自已动手
 
 #本来打算自建后台服务,但发觉有道有自带的生词本http://dict.youdao.com/wordbook/wordlist,便打算用有道自已的生词本
 #为求简单(牺牲体验),直接链接到youdao官方的login页获取cookie
