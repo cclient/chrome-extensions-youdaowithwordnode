@@ -242,6 +242,7 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
+                    var jinfo=JSON.parse(xhr.responseText)
                     if(jinfo.message=="nouser"){
                         showLWindow("http://account.youdao.com/login")
                     }else{
