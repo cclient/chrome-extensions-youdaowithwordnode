@@ -4,7 +4,7 @@
 
 ##加载方式
 
-##点击，“Download ZIP”下载项目,下载完成后，解压到某目录A
+##点击，右上角“Download ZIP”下载项目,下载完成后，解压到某目录A
 
 ##Chrome浏览器打开chrome://extensions/
 
