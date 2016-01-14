@@ -1,6 +1,7 @@
 # chrome-extensions-youdaowithwordnode
 #
-
+google翻译版 https://github.com/cclient/chrome-extensions-googletranslatewithyoudaowordnote
+google翻译功能多了删除生词的功能，且在改动的地方加了todu标志。
 
 ##加载方式
 
