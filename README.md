@@ -6,9 +6,10 @@ google翻译功能多了删除生词的功能，且在改动的地方加了todu�
 #加载方式
 
 #快速加载
-1 下载chrome-extensions-youdaowithwordnode.crx
-2 Chrome打开 chrome://extensions/
-3 拖拽chrome-extensions-youdaowithwordnode.crx 至 Chrome chrome://extensions/ 页
+
+1下载chrome-extensions-youdaowithwordnode.crx(项目根目录,右击链接另存为)
+2Chrome打开 chrome://extensions/
+3拖拽chrome-extensions-youdaowithwordnode.crx 至 Chrome chrome://extensions/ 页
 
 #源文件加载
 
