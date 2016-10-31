@@ -8,7 +8,12 @@ var Options =
     "dict_disable": ["checked", false],
     "ctrl_only": ["checked", false],
     "english_only": ["checked", false],
-	"autoaddword": ["checked", false]
+    "autoplay": ["checked", false],
+    "playwhenhovering": ["checked", false],
+	// todo start
+	"autoaddword": ["checked", false],
+	// todo end
+    "playwhenclicking": ["checked", false]
 };
 function close()
 {
@@ -223,7 +228,7 @@ function mainFrameQuery(){
 function save_options()
 {
 	changeIcon();
-	for (var key in Options)
+	for (key in Options)
     {
         if (Options[key][0] == "checked")
         {
@@ -240,76 +245,67 @@ function goAbout()
 {
 	window.open("http://cidian.youdao.com/chromeplus");
 }
-function goWordList(){
-	window.open("http://dict.youdao.com/wordbook/wordlist");
-}
-function goLogin()
-{
-	chrome.runtime.sendMessage({
-		action : 'openlogin'
-	},function(response){
-		console.log(response);
-	});
-}
-function sortedKeys(array) {
-	var keys = [];
-	for (var i in array) {
-		keys.push(i);
-	}
-	keys.sort();
-	return keys;
-}
-
-
-
-
-function removeCookie(cookie) {
-	var url = "http" + (cookie.secure ? "s" : "") + "://" + cookie.domain +
-			cookie.path;
-	chrome.cookies.remove({"url": url, "name": cookie.name});
-}
-
-function goLogout(){
-
-	chrome.runtime.sendMessage({
-		action : 'openlogout'
-	},function(response){
-		console.log(response);
-	});
-}
-
 function initIcon()
 {
 	var localOptions = JSON.parse(localStorage["ColorOptions"]);
 	if(localOptions['dict_disable'][1] == true) {
 		chrome.browserAction.setIcon({
-			path: "icon_nodict.gif"
+			path: "icon_nodict.png"
 		})
 	}
 }
 function changeIcon()
 {
+	
 	if (document.getElementById('dict_disable').checked) {
+		
 		var a = document.getElementById('ctrl_only');
 		a.disabled = true;
+    a.parentElement.style.color = 'grey';
+		
 		a = document.getElementById('english_only');
 		a.disabled = true;
+    a.parentElement.style.color = 'grey';
+    
+    a = document.getElementById('autoplay');
+    a.disabled = true;
+    a.parentElement.style.color = 'grey';
+    a = document.getElementById('playwhenhovering');
+    a.disabled = true;
+    a.parentElement.style.color = 'grey';
+    a = document.getElementById('playwhenclicking');
+    a.disabled = true;
+    a.parentElement.style.color = 'grey';
+		
 		chrome.browserAction.setIcon({
-			path: "icon_nodict.gif"
+			path: "icon_nodict.png"
 		})
 	}
 	else {
 		var a = document.getElementById('ctrl_only');
 		a.disabled = false;
+    a.parentElement.style.color = 'black';
 		
 		a = document.getElementById('english_only');
 		a.disabled = false;
+    a.parentElement.style.color = 'black';
+    
+    a = document.getElementById('autoplay');
+    a.disabled = false;
+    a.parentElement.style.color = 'black';
+    a = document.getElementById('playwhenhovering');
+    a.disabled = false;
+    a.parentElement.style.color = 'black';
+    a = document.getElementById('playwhenclicking');
+    a.disabled = false;
+    a.parentElement.style.color = 'black';
 		
 		chrome.browserAction.setIcon({
-			path: "icon_dict.gif"
+			path: "icon_dict.png"
 		})
 	}
 }
+
 function check()
 {
    var word = document.getElementsByName("word")[0].value;
@@ -318,6 +314,7 @@ function check()
 function restore_options()
 {
     var localOptions = JSON.parse(localStorage["ColorOptions"]);
+    
     for (key in localOptions)
     {
         optionValue = localOptions[key];
@@ -335,19 +332,45 @@ function restore_options()
             }
         }
     }
+    
 }
 
 document.body.onload =  function () { restore_options();document.getElementById('word').focus();changeIcon(); };
 document.getElementById("dict_disable").onclick = function () {save_options();};
 document.getElementById("ctrl_only").onclick = function () { save_options();};
 document.getElementById("english_only").onclick= function () { save_options();};
-document.getElementById("autoaddword").onclick = function () {save_options();};
+document.getElementById("autoplay").onclick= function () { save_options();};
+document.getElementById("playwhenhovering").onclick= function () { save_options();};
+document.getElementById("playwhenclicking").onclick= function () { save_options();};
 document.getElementById("feedback").onclick = function () {goFeedback();};
 document.getElementById("about").onclick = function () {goAbout();};
 document.getElementById("word").onkeydown = function () { if(event.keyCode==13)mainQuery(document.getElementsByName("word")[0].value,translateXML); };
 document.getElementById("querybutton").onclick = function () { mainQuery(document.getElementsByName("word")[0].value,translateXML); };
 
+// todo start
+document.getElementById("autoaddword").onclick = function () {save_options();};
 document.getElementById("btnlogin").onclick = function () {goLogin();};
 document.getElementById("btnlogout").onclick = function () {goLogout();};
 document.getElementById("btnwordlist").onclick = function () {goWordList();};
+
+function goWordList(){
+	window.open("http://dict.youdao.com/wordbook/wordlist");
+}
+function goLogin() {
+	chrome.runtime.sendMessage({
+		action : 'openlogin'
+	},function(response){
+		console.log(response);
+	});
+}
+
+function goLogout(){
+
+	chrome.runtime.sendMessage({
+		action : 'openlogout'
+	},function(response){
+		console.log(response);
+	});
+}
+// todo end
 
