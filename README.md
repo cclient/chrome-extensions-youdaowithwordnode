@@ -1,7 +1,8 @@
 # chrome-extensions-youdaowithwordnode
 #
 google翻译版 https://github.com/cclient/chrome-extensions-googletranslatewithyoudaowordnote
-google翻译功能多了删除生词的功能，且在改动的地方加了todu标志。
+
+点击是添加生词 alt+点击是删除生词
 
 #加载方式
 
@@ -34,7 +35,7 @@ google翻译功能多了删除生词的功能，且在改动的地方加了todu�
 
 在翻译弹窗里添加了“+生词本”链接，点击时若没有登录，会弹出登陆框。
 
-登陆成功后即可添加生词(按alt+点击，为删除生词)，成功会有提示，也可去“生词本”，验证。
+登陆成功后即可添加生词(alt+点击，为删除生词)，成功会有提示，也可去“生词本”，验证。
 
 若勾选“自动添加生词”，则每次查词，自动加入生词本
 
