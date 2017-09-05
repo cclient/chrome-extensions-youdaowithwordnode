@@ -205,7 +205,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 if (xhr.status == 200) {
                     var jinfo = JSON.parse(xhr.responseText)
                     if (jinfo.message == "nouser") {
-                        showLWindow("http://account.youdao.com/login")
+                        showLWindow("http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull")
                     } else {
                         if (jinfo.message == "adddone") {
                             sendResponse({ result: "addsuccess" })
@@ -222,22 +222,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         xhr.send();
     }
     if (message.action == "openlogin") {
-        alert("hello login");
-        showLWindow("http://account.youdao.com/login")
+        // showLWindow("http://account.youdao.com/login");
+                showLWindow("http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull");
+        // showLWindow("https://reg.163.com/logins.jsp")
     }
     if (message.action == "openlogout") {
-        alert("hello logout");
-        console.log("cookies");
         chrome.cookies.getAll({}, function(cookies, error) {
             for (var i in cookies) {
                 if (cookies[i].domain == "dict.youdao.com" || cookies[i].domain == ".youdao.com") {
-                    alert(cookies[i].domain + " " + cookies[i].name + "," + cookies[i].url + "," + cookies[i].storeId);
-                    // removeCookie(cookies[i]);
                     var url = "http" + (cookies[i].secure ? "s" : "") + "://" + cookies[i].domain +
                         cookies[i].path;
                     chrome.cookies.remove({ "url": url, "name": cookies[i].name });
                 }
             }
+            alert("注销成功")
         });
     }
 });
@@ -248,6 +246,7 @@ function showLWindow(url) {
     chrome.windows.create({
         url: url,
         type: "popup",
+        // type: "normal",
         width: w,
         height: h,
         left: Math.floor(screen.width / 2 - (w + 1) / 2),
