@@ -1,5 +1,4 @@
-﻿var DefaultOptions =
-{
+﻿var DefaultOptions = {
     "dict_disable": ["checked", false],
     "ctrl_only": ["checked", false],
     "english_only": ["checked", true],
@@ -26,7 +25,7 @@ initIcon();
 
 sprintfWrapper = {
 
-    init: function () {
+    init: function() {
 
         if (typeof arguments == "undefined") {
             return null;
@@ -91,40 +90,31 @@ sprintfWrapper = {
 
             if (matches[i].code == '%') {
                 substitution = '%'
-            }
-            else if (matches[i].code == 'b') {
+            } else if (matches[i].code == 'b') {
                 matches[i].argument = String(Math.abs(parseInt(matches[i].argument)).toString(2));
                 substitution = sprintfWrapper.convert(matches[i], true);
-            }
-            else if (matches[i].code == 'c') {
+            } else if (matches[i].code == 'c') {
                 matches[i].argument = String(String.fromCharCode(parseInt(Math.abs(parseInt(matches[i].argument)))));
                 substitution = sprintfWrapper.convert(matches[i], true);
-            }
-            else if (matches[i].code == 'd') {
+            } else if (matches[i].code == 'd') {
                 matches[i].argument = String(Math.abs(parseInt(matches[i].argument)));
                 substitution = sprintfWrapper.convert(matches[i]);
-            }
-            else if (matches[i].code == 'f') {
+            } else if (matches[i].code == 'f') {
                 matches[i].argument = String(Math.abs(parseFloat(matches[i].argument)).toFixed(matches[i].precision ? matches[i].precision : 6));
                 substitution = sprintfWrapper.convert(matches[i]);
-            }
-            else if (matches[i].code == 'o') {
+            } else if (matches[i].code == 'o') {
                 matches[i].argument = String(Math.abs(parseInt(matches[i].argument)).toString(8));
                 substitution = sprintfWrapper.convert(matches[i]);
-            }
-            else if (matches[i].code == 's') {
+            } else if (matches[i].code == 's') {
                 matches[i].argument = matches[i].argument.substring(0, matches[i].precision ? matches[i].precision : matches[i].argument.length)
                 substitution = sprintfWrapper.convert(matches[i], true);
-            }
-            else if (matches[i].code == 'x') {
+            } else if (matches[i].code == 'x') {
                 matches[i].argument = String(Math.abs(parseInt(matches[i].argument)).toString(16));
                 substitution = sprintfWrapper.convert(matches[i]);
-            }
-            else if (matches[i].code == 'X') {
+            } else if (matches[i].code == 'X') {
                 matches[i].argument = String(Math.abs(parseInt(matches[i].argument)).toString(16));
                 substitution = sprintfWrapper.convert(matches[i]).toUpperCase();
-            }
-            else {
+            } else {
                 substitution = matches[i].match;
             }
 
@@ -138,7 +128,7 @@ sprintfWrapper = {
 
     },
 
-    convert: function (match, nosign) {
+    convert: function(match, nosign) {
         if (nosign) {
             match.sign = '';
         } else {
@@ -165,7 +155,7 @@ sprintfWrapper = {
 sprintf = sprintfWrapper.init;
 
 // todo start
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
     // if (message.action == "addword" || message.action == "delword") {
     //     var url = 'http://dict.youdao.com/wordbook/ajax?action=';
@@ -201,16 +191,16 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     // if (message.action == "addword") {
     if (message.action == "addword" || message.action == "delword") {
 
-            var url = 'http://dict.youdao.com/wordbook/ajax?action=';
-            if (message.action == "delword") {
-                url += 'delword';
-            } else {
-                url += 'addword';
-            }
-            url += '&q=' + encodeURIComponent(message.data) + '&date=' + new Date() + '&le=eng';
+        var url = 'http://dict.youdao.com/wordbook/ajax?action=';
+        if (message.action == "delword") {
+            url += 'delword';
+        } else {
+            url += 'addword';
+        }
+        url += '&q=' + encodeURIComponent(message.data) + '&date=' + new Date() + '&le=eng';
 
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     var jinfo = JSON.parse(xhr.responseText)
@@ -218,13 +208,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                         showLWindow("http://account.youdao.com/login")
                     } else {
                         if (jinfo.message == "adddone") {
-                            sendResponse({result: "addsuccess"})
-                        }else if (jinfo.success == "1") {
-                            sendResponse({result: "delsuccess"});
+                            sendResponse({ result: "addsuccess" })
+                        } else if (jinfo.success == "1") {
+                            sendResponse({ result: "delsuccess" });
                         }
                     }
                 } else {
-                    sendResponse({error: "error "+"  "+xhr.readyState +" "+xhr.status});
+                    sendResponse({ error: "error " + "  " + xhr.readyState + " " + xhr.status });
                 }
             }
         }
@@ -232,42 +222,47 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         xhr.send();
     }
     if (message.action == "openlogin") {
+        alert("hello login");
         showLWindow("http://account.youdao.com/login")
     }
     if (message.action == "openlogout") {
-        chrome.cookies.getAll({}, function (cookies) {
+        alert("hello logout");
+        console.log("cookies");
+        chrome.cookies.getAll({}, function(cookies, error) {
             for (var i in cookies) {
                 if (cookies[i].domain == "dict.youdao.com" || cookies[i].domain == ".youdao.com") {
-                    removeCookie(cookies[i])
+                    alert(cookies[i].domain + " " + cookies[i].name + "," + cookies[i].url + "," + cookies[i].storeId);
+                    // removeCookie(cookies[i]);
+                    var url = "http" + (cookies[i].secure ? "s" : "") + "://" + cookies[i].domain +
+                        cookies[i].path;
+                    chrome.cookies.remove({ "url": url, "name": cookies[i].name });
                 }
             }
         });
     }
 });
-function showLWindow(url)
-{
-	var w = 400;
-	var h = 400;
-	chrome.windows.create({
-		url: url,
-		type: "popup",
-		width: w,
-		height: h,
-		left: Math.floor(screen.width / 2 - (w + 1) / 2),
-		top: Math.floor(screen.height / 2 - h / 2)
-	});
+
+function showLWindow(url) {
+    var w = 400;
+    var h = 400;
+    chrome.windows.create({
+        url: url,
+        type: "popup",
+        width: w,
+        height: h,
+        left: Math.floor(screen.width / 2 - (w + 1) / 2),
+        top: Math.floor(screen.height / 2 - h / 2)
+    });
 }
 // todo end
 chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
+    function(request, sender, sendResponse) {
         if (request.init == "init" && ColorsChanged == true) {
-            sendResponse(
-                {
-                    init: "globalPages",
-                    ChangeColors: "true",
-                    ColorOptions: localStorage["ColorOptions"]
-                }
-            );
+            sendResponse({
+                init: "globalPages",
+                ChangeColors: "true",
+                ColorOptions: localStorage["ColorOptions"]
+            });
         }
     }
 );
@@ -308,8 +303,7 @@ function genTable(word, strpho, baseTrans, webTrans) {
             encodeURIComponent(word) +
             '&ue=utf8&keyfrom=chrome.extension" target=_blank>详细</a></span><a id="test"><span class="ydd-sp ydd-close">X</span></a></div></div>' +
             '    <div id="yddMiddle">';
-    }
-    else {
+    } else {
         fmt = '<div id="yddContainer" align=left style="padding:0px 0px 0px 0px;">' +
             '    <div id="yddTop" class="ydd-sp"><div id="yddTopBorderlr"><a href="http://dict.youdao.com/search?q=' +
             encodeURIComponent(word) +
@@ -369,6 +363,7 @@ function genTable(word, strpho, baseTrans, webTrans) {
 var noBaseTrans = false;
 var noWebTrans = false;
 var speach = '';
+
 function translateXML(xmlnode) {
     var translate = "<strong>查询:</strong><br/>";
     var root = xmlnode.getElementsByTagName("yodaodict")[0];
@@ -406,8 +401,7 @@ function translateXML(xmlnode) {
     if (noBaseTrans == false) {
         if ("" + root.getElementsByTagName("translation")[0].childNodes[0] != "undefined") {
             translations = root.getElementsByTagName("translation");
-        }
-        else {
+        } else {
             noBaseTrans = true;
         }
         var i;
@@ -420,8 +414,7 @@ function translateXML(xmlnode) {
     if (noWebTrans == false) {
         if ("" + root.getElementsByTagName("web-translation")[0].childNodes[0] != "undefined") {
             webtranslations = root.getElementsByTagName("web-translation");
-        }
-        else {
+        } else {
             noWebTrans = true;
         }
         var i;
@@ -435,6 +428,7 @@ function translateXML(xmlnode) {
     return genTable(retphrase, strpho, basetrans, webtrans);
     //return translate;
 }
+
 function translateTransXML(xmlnode) {
     var s = xmlnode.indexOf("CDATA[");
     var e = xmlnode.indexOf("]]");
@@ -450,8 +444,7 @@ function translateTransXML(xmlnode) {
 
     if ((isContainChinese(input_str_tmp) || isContainJapanese(input_str_tmp) || isContainKoera(input_str_tmp)) && input_str_tmp.length > 15) {
         input_str_tmp = input_str_tmp.substring(0, 8) + ' ...';
-    }
-    else if (input_str_tmp.length > 25) {
+    } else if (input_str_tmp.length > 25) {
         input_str_tmp = input_str_tmp.substring(0, 15) + ' ...';
     }
 
@@ -459,14 +452,14 @@ function translateTransXML(xmlnode) {
     if (trans_str_tmp == input_str_tmp) return null;
 
     var res = '<div id="yddContainer" align=left style="padding:0px 0px 0px 0px;" >' +
-        '    <div id="yddTop" class="ydd-sp"><div id="yddTopBorderlr"><a href="http://fanyi.youdao.com/translate?i=' + encodeURIComponent(input_str) + '&keyfrom=chrome" class="ydd-sp ydd-icon" style="padding:0px 0px 0px 0px;padding-top:17px;" target=_blank">有道词典</a><div style="font-weight:normal;display: inline;">'
-        + input_str_tmp.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#39;") +
+        '    <div id="yddTop" class="ydd-sp"><div id="yddTopBorderlr"><a href="http://fanyi.youdao.com/translate?i=' + encodeURIComponent(input_str) + '&keyfrom=chrome" class="ydd-sp ydd-icon" style="padding:0px 0px 0px 0px;padding-top:17px;" target=_blank">有道词典</a><div style="font-weight:normal;display: inline;">' +
+        input_str_tmp.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#39;") +
         '</div><span style="float:right;font-weight:normal;font-size:10px"><a href="http://fanyi.youdao.com/translate?i=' + encodeURIComponent(input_str) + '&smartresult=dict&keyfrom=chrome.extension" target=_blank>详细</a></span><a id="test"><span class="ydd-sp ydd-close">X</span></a></div></div>' +
         '    <div id="yddMiddle">' +
         '      <div class="ydd-trans-wrapper" id="yddSimpleTrans">' +
         '        <div class="ydd-trans-container ydd-padding010">' +
-        trans_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#39;")
-        + '</div>' +
+        trans_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#39;") +
+        '</div>' +
         '      ' +
         '	</div>' +
         '   </div>' +
@@ -475,13 +468,14 @@ function translateTransXML(xmlnode) {
 
     return res;
 }
+
 function fetchWordWithoutDeskDict(word, callback) {
     var lang = '';
     if (isContainKoera(word)) {
         lang = '&le=ko';
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function (data) {
+    xhr.onreadystatechange = function(data) {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
 
@@ -501,9 +495,11 @@ function fetchWordWithoutDeskDict(word, callback) {
 var _word;
 var _callback;
 var _timer;
+
 function handleTimeout() {
     fetchWordWithoutDeskDict(_word, _callback);
 }
+
 function isKoera(str) {
     for (i = 0; i < str.length; i++) {
         if (((str.charCodeAt(i) > 0x3130 && str.charCodeAt(i) < 0x318F) || (str.charCodeAt(i) >= 0xAC00 && str.charCodeAt(i) <= 0xD7A3))) {
@@ -512,6 +508,7 @@ function isKoera(str) {
     }
     return false;
 }
+
 function isContainKoera(temp) {
     var cnt = 0;
     for (var i = 0; i < temp.length; i++) {
@@ -521,6 +518,7 @@ function isContainKoera(temp) {
     if (cnt > 0) return true;
     return false;
 }
+
 function fetchWord(word, callback) {
     if (isContainKoera(word)) {
         fetchWordWithoutDeskDict(word, callback);
@@ -529,7 +527,7 @@ function fetchWord(word, callback) {
     var xhr = new XMLHttpRequest();
     _word = word;
     _callback = callback;
-    xhr.onreadystatechange = function (data) {
+    xhr.onreadystatechange = function(data) {
         clearTimeout(_timer);
     }
     var url = 'http://127.0.0.1:8999/word=' + word + '&';
@@ -537,13 +535,13 @@ function fetchWord(word, callback) {
     xhr.send();
     _timer = setTimeout(handleTimeout, 600);
 };
+
 function onRequest(request, sender, callback) {
 
     if (request.action == 'dict') {
         if (navigator.appVersion.indexOf("Win") != -1) {
             fetchWordWithoutDeskDict(request.word, callback);
-        }
-        else {
+        } else {
             fetchWordWithoutDeskDict(request.word, callback);
         }
     }
@@ -555,7 +553,7 @@ function onRequest(request, sender, callback) {
 
 function fetchTranslate(words, callback) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function (data) {
+    xhr.onreadystatechange = function(data) {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var dataText = translateTransXML(xhr.responseText);

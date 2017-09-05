@@ -1,29 +1,27 @@
 {
-   "background": {
-      "scripts": [ "options.js", "background.js" ]
-   },
-   "browser_action": {
-      "default_icon": "icon_dict.png",
-      "default_popup": "options.html"
-   },
-   "content_scripts": [ {
-      "all_frames": true,
-      "js": [ "speech.js", "lookup.js", "rlog.v1.js" ],
-      "match_about_blank": true,
-      "matches": [ "\u003Call_urls>" ],
-      "run_at": "document_end"
-   } ],
-   "description": "支持Chrome浏览器的划词翻译",
-   "icons": {
-      "128": "icon-128.png",
-      "64": "icon.png"
-   },
-   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNfmwkcubNM4WFRsykuHp4I/pbmMMvSx4eLHaaE/ZM/jtEjaF+vBuQymrZHaXrLGtS/aqI75l98VTl5rhWWzqgKUsxLMoVflrLvZv0sjlJaPZ1T9B4jH28M7FZY2D1CT6sPntjqIYwJDt29NuwdU+lozVEJKc9R9SQUlf/GQ08GQIDAQAB",
-   "manifest_version": 2,
-   "name": "有道词典Chrome划词插件",
-   "options_page": "options.html",
-   "permissions": [ "\u003Call_urls>" ],
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "1.55",
-   "web_accessible_resources": [ "ab20.png", "ydd-sprite.png", "speech.png" ]
+    "background": {
+        "scripts": ["options.js", "background.js"]
+    },
+    "browser_action": {
+        "default_icon": "icon_dict.png",
+        "default_popup": "options.html"
+    },
+    "content_scripts": [{
+        "all_frames": true,
+        "js": ["speech.js", "lookup.js", "rlog.v1.js"],
+        "match_about_blank": true,
+        "matches": ["\u003Call_urls>"],
+        "run_at": "document_end"
+    }],
+    "description": "支持Chrome浏览器的划词翻译",
+    "icons": {
+        "128": "icon-128.png",
+        "64": "icon.png"
+    },
+    "manifest_version": 2,
+    "name": "有道词典Chrome划词插件",
+    "options_page": "options.html",
+    "permissions": ["cookies", "*://dict.youdao.com/", "*://.youdao.com/", "*://*.youdao.com/", "\u003Call_urls>"],
+    "version": "1.55",
+    "web_accessible_resources": ["ab20.png", "ydd-sprite.png", "speech.png"]
 }
