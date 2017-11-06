@@ -2,13 +2,18 @@
 
 [google翻译版](https://github.com/cclient/chrome-extensions-googletranslatewithyoudaowordnote)
 
+# 使用示例
+
 添加生词:点击
 
 删除生词:alt+点击
 
+![安装](demo.gif)
+
 # 加载方式
 
 # 快速加载(普通用户，部分chrome版本不可用，因非官方应用，会有报警，需要允许）
+![安装](install.gif)
 
 1 下载 [chrome-extensions-youdaowithwordnode.crx文件](https://github.com/cclient/chrome-extensions-youdaowithwordnode/releases/download/v1.55_0/chrome-extensions-youdaowithwordnode.crx)
 
